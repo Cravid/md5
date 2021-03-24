@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+usage="$(basename "$0") OPTIONS [string] -- create an md5 hash from string
+
+OPTIONS:
+	-h|--help	Show this help message
+
+FUNCTION:
+	string		Input to create md5 hash for, if empty or - uses stdin
+"
+usage() {
+    echo "$usage"
+    exit 1
+}
+
+for option in "$@"
+do
+    case $option in
+        -h|--help) usage;;
+        -*|--*|\?) printf "illegal option: %s\n\n" "$option" >&2; usage;;
+    esac
+done
+
+##
+
+if [ -p /dev/stdin ]; then
+    read string
+elif [ $# -eq 1 ]; then
+    string=$1
+else
+    usage
+fi
+
+md5sum <<< $string | awk {'print $1'}
+
+exit $?

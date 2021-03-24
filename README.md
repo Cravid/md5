@@ -1,2 +1,2 @@
-# md5
-An md5 wrapper for linux
+# md5x
+Cross plattform wrapper for creating a md5 hash
